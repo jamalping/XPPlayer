@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'XPPlayer_Example' do
+  pod 'XPPlayer', :path => '../'
+
+  target 'XPPlayer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

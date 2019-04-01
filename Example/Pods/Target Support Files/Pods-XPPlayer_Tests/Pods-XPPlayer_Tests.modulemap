@@ -1,0 +1,6 @@
+framework module Pods_XPPlayer_Tests {
+  umbrella header "Pods-XPPlayer_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

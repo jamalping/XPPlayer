@@ -1,0 +1,16 @@
+PODS:
+  - XPPlayer (0.1.0)
+
+DEPENDENCIES:
+  - XPPlayer (from `../`)
+
+EXTERNAL SOURCES:
+  XPPlayer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  XPPlayer: 3b6bc82148ea045cd0da40a1cbbcfd4c06ec7271
+
+PODFILE CHECKSUM: 9f188e5d9b094f3c8d54effa29ca318e03de1bb2
+
+COCOAPODS: 1.5.3
