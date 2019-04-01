@@ -7,12 +7,26 @@
 //
 
 import UIKit
+import XPPlayer
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, XPPlayerable {
+    var playerView: UIView?
+    
+    var assetURL: URL?
+    
+    let playerV = XPPlayerView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let path = Bundle.main.path(forResource: "tttt.mp4", ofType: nil), let url = URL.init(string: path) {
+            self.assetURL = url
+        }
+        playerV.frame = self.view.bounds
+        self.view.addSubview(playerV)
+        self.playerView = playerV
+        self.play()
     }
 
     override func didReceiveMemoryWarning() {
