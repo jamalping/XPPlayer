@@ -15,32 +15,15 @@ public protocol XPPlayerable {
     
     /// 播放器所需要的资源
     var assetURL: URL? { get set }
-}
-
-private var playerKey: Void
-extension XPPlayerable {
-    /// 播放器对象
-    var player: XPPlayer? {
-        get {
-            return objc_getAssociatedObject(self, &playerKey) as? XPPlayer
-        }
-        set {
-            objc_setAssociatedObject(self, &playerKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
     
-    /// 创建一个播放器
-    mutating func createPlayer() {
-        if self.player == nil {
-            self.player = XPPlayer()
-        }
-    }
+    var player: XPPlayer? { get set }
 }
 
 // MARK: Action
 public extension XPPlayerable {
+    
     func play() {
-        
+        self.player?.play()
     }
     
     func stop() {
@@ -50,26 +33,44 @@ public extension XPPlayerable {
 }
 
 // MARK: Enum
-
 /// 播放器播放状态
-///
-/// - unknown: 未知
-/// - playing: 正在播放
-/// - paused: 暂停
-/// - failed: 错误
-/// - stop: 暂停
 public enum XPPlayerPlaybackState {
-    case unknown, playing, paused, failed, stop
-}
-/// 填充方式
-///
-/// - aspectFit: 等比例填充，直到一个维度到达区域边界
-/// - aspectFill: 等比例填充，直到填充满整个视图区域，其中一个维度的部分区域会被裁剪
-/// - Fill: 全部填充
-public enum XPPlayerScalingMode {
-    case aspectFit, aspectFill, Fill
+    /// 未知
+    case unknown
+    /// 正在播放
+    case playing
+    /// 暂停
+    case paused
+    /// 错误
+    case failed
+    /// 停止
+    case stop
 }
 
+/// 填充方式
+public enum XPPlayerScalingMode {
+    /// 等比例填充，直到一个维度到达区域边界
+    case aspectFit
+    /// 等比例填充，直到填充满整个视图区域，其中一个维度的部分区域会被裁剪
+    case aspectFill
+    /// 全部填充
+    case fill
+}
+
+
+/// 加载状态
+enum XPPlayerLoadState {
+    /// 未知
+    case unknown
+    /// 准备播放
+    case prepare
+    /// 可以播放
+    case playable
+    /// 自动播放
+    case playthroughOK
+    /// 播放状态下播放将自动暂停
+    case stalled
+}
 
 // MARK: get set
 private var currentTimeKey: Void?
@@ -83,6 +84,7 @@ private var presentationSizeKey: Void?
 private var rateKey: Void?
 private var isPlayingKey: Void?
 private var scalingModeKey: Void?
+private var isPreparedToPlayKey: Void?
 
 
 extension XPPlayerable {
@@ -112,6 +114,16 @@ extension XPPlayerable {
         }
         set {
             objc_setAssociatedObject(self, &bufferTimeKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    /// 是否准备好去播放
+    var isPreparedToPlay: Bool? {
+        get {
+            return objc_getAssociatedObject(self, &isPreparedToPlayKey) as? Bool
+        }
+        set {
+            objc_setAssociatedObject(self, &isPreparedToPlayKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     

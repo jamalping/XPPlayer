@@ -10,12 +10,14 @@ import UIKit
 import XPPlayer
 
 class ViewController: UIViewController, XPPlayerable {
+    var player: XPPlayer? = XPPlayer()
+    
     var playerView: UIView?
     
     var assetURL: URL?
     
     let playerV = XPPlayerView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -26,12 +28,15 @@ class ViewController: UIViewController, XPPlayerable {
         playerV.frame = self.view.bounds
         self.view.addSubview(playerV)
         self.playerView = playerV
-        self.play()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.play()
     }
 
 }
